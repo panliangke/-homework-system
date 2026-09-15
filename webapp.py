@@ -8,7 +8,7 @@ import os
 import ssl
 import urllib.request
 import urllib.error
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 # ===== 配置 =====
 PORT = int(os.environ.get("PORT", 8080))
@@ -124,7 +124,8 @@ if __name__ == "__main__":
     print("  按 Ctrl+C 停止")
     print("=" * 50)
 
-    server = HTTPServer(("0.0.0.0", PORT), AppHandler)
+    # 多线程模式：多个同学可同时使用，平台健康检查也不会被慢请求阻塞
+    server = ThreadingHTTPServer(("0.0.0.0", PORT), AppHandler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
