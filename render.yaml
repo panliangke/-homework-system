@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: homework-system
+    env: python
+    buildCommand: ""
+    startCommand: python webapp.py
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: API_BASE
+        value: https://homework.pkuai.cc

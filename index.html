@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作业提交系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 登录页面 -->
+    <div id="login-page" class="page active">
+        <div class="login-container">
+            <h1>📚 作业提交系统</h1>
+            <p class="subtitle">教学管理平台</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="student-id">学号</label>
+                    <input type="text" id="student-id" placeholder="请输入学号" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密钥</label>
+                    <input type="password" id="password" placeholder="请输入密钥" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">登 录</button>
+            </form>
+            <div id="login-error" class="error-msg hidden"></div>
+        </div>
+    </div>
+
+    <!-- 主页面 -->
+    <div id="main-page" class="page">
+        <header>
+            <div class="header-left">
+                <h2>📚 作业提交系统</h2>
+            </div>
+            <div class="header-right">
+                <span id="user-info"></span>
+                <button class="btn btn-outline" onclick="logout()">退出登录</button>
+            </div>
+        </header>
+
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="assignments">作业列表</button>
+            <button class="tab-btn" data-tab="grades">我的成绩</button>
+            <button class="tab-btn" data-tab="summary">统计概览</button>
+        </nav>
+
+        <main>
+            <!-- 作业列表 -->
+            <section id="assignments-tab" class="tab-content active">
+                <div id="assignments-list" class="card-grid">
+                    <div class="loading">加载中...</div>
+                </div>
+            </section>
+
+            <!-- 成绩页面 -->
+            <section id="grades-tab" class="tab-content">
+                <div id="grades-list">
+                    <div class="loading">加载中...</div>
+                </div>
+            </section>
+
+            <!-- 统计页面 -->
+            <section id="summary-tab" class="tab-content">
+                <div id="summary-content">
+                    <div class="loading">加载中...</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 作业详情模态框 -->
+    <div id="assignment-modal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">作业详情</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- 动态内容 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
