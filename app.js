@@ -51,6 +51,12 @@ async function apiRequest(path, options = {}) {
 
         const data = await response.json();
 
+        // 登录态过期或失效：自动清除并返回登录页
+        if (response.status === 401 && state.token) {
+            handleSessionExpired(data.error?.message);
+            throw new Error(data.error?.message || '登录已过期，请重新登录');
+        }
+
         if (!response.ok) {
             const errorMsg = data.error?.message || '请求失败';
             throw new Error(errorMsg);
@@ -109,6 +115,22 @@ function logout() {
     document.getElementById('login-page').classList.add('active');
     document.getElementById('main-page').classList.remove('active');
     document.getElementById('login-form').reset();
+}
+
+// 登录态过期：清除凭据并提示重新登录
+function handleSessionExpired(message) {
+    state.token = null;
+    state.user = null;
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    document.getElementById('main-page').classList.remove('active');
+    document.getElementById('login-page').classList.add('active');
+    document.getElementById('login-form').reset();
+
+    const errorEl = document.getElementById('login-error');
+    errorEl.textContent = message || '登录已过期，请重新登录';
+    errorEl.classList.remove('hidden');
 }
 
 // === 页面切换 ===
